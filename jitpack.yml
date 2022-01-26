@@ -1,0 +1,2 @@
+install:
+- ant -f ./make/langtools/netbeans/nb-javac clean jar
