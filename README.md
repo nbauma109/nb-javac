@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/nbauma109/nb-javac.svg)](https://jitpack.io/#nbauma109/nb-javac)
+
 # About nb-javac!
 "nb-javac" is a patched version of OpenJDK "javac", i.e., the Java compiler. This has long been part of NetBeans, providing a highly tuned Java compiler specifically for the Java editor i.e., parsing and lexing for features such as syntax coloring, code completion.
 
