@@ -912,7 +912,7 @@ public class JavapTask implements DisassemblerTool.DisassemblerTask, Messages {
         return defaultFileManager;
     }
 
-    private JavaFileObject getClassFileObject(String className) throws IOException {
+    protected JavaFileObject getClassFileObject(String className) throws IOException {
         try {
             JavaFileObject fo;
             if (moduleLocation != null) {
@@ -1109,7 +1109,7 @@ public class JavapTask implements DisassemblerTool.DisassemblerTask, Messages {
     DiagnosticListener<? super JavaFileObject> diagnosticListener;
     List<String> classes;
     Location moduleLocation;
-    Options options;
+    public Options options;
     //ResourceBundle bundle;
     Locale task_locale;
     Map<Locale, ResourceBundle> bundles;
