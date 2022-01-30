@@ -50,8 +50,6 @@ public class Options {
     protected Options(Context context) {
         context.put(Options.class, this);
     }
-    
-    public Options() {}
 
     /**
      * Checks access of class, field or method.
