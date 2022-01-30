@@ -1,5 +1,7 @@
 install:
 - ant -f ./make/langtools/netbeans/nb-javac clean jar
 - export NB_JAVAC_VER=$(grep "nb-javac-ver=" make/langtools/netbeans/nb-javac/nbproject/project.properties | cut -d= -f2)
-- mvn install:install-file -Dfile=/home/jitpack/build/make/langtools/netbeans/nb-javac/dist/nb-javac-${NB_JAVAC_VER}.jar -DgroupId=com.github.nbauma109 -DartifactId=nb-javac -Dversion=${NB_JAVAC_VER} -Dpackaging=jar
-- mvn install:install-file -Dfile=/home/jitpack/build/make/langtools/netbeans/nb-javac/dist/nb-javac-${NB_JAVAC_VER}-sources.jar -DgroupId=com.github.nbauma109 -DartifactId=nb-javac -Dversion=${NB_JAVAC_VER} -Dpackaging=jar -Dclassifier=sources
+- mvn install:install-file -Dfile=/home/jitpack/build/make/langtools/netbeans/nb-javac/dist/nb-javac-api-${NB_JAVAC_VER}.jar -DgroupId=com.github.nbauma109 -DartifactId=nb-javac-api -Dversion=${NB_JAVAC_VER} -Dpackaging=jar
+- mvn install:install-file -Dfile=/home/jitpack/build/make/langtools/netbeans/nb-javac/dist/nb-javac-api-${NB_JAVAC_VER}-sources.jar -DgroupId=com.github.nbauma109 -DartifactId=nb-javac-api -Dversion=${NB_JAVAC_VER} -Dpackaging=jar -Dclassifier=sources
+- mvn install:install-file -Dfile=/home/jitpack/build/make/langtools/netbeans/nb-javac/dist/nb-javac-impl-${NB_JAVAC_VER}.jar -DgroupId=com.github.nbauma109 -DartifactId=nb-javac-impl -Dversion=${NB_JAVAC_VER} -Dpackaging=jar
+- mvn install:install-file -Dfile=/home/jitpack/build/make/langtools/netbeans/nb-javac/dist/nb-javac-impl-${NB_JAVAC_VER}-sources.jar -DgroupId=com.github.nbauma109 -DartifactId=nb-javac-impl -Dversion=${NB_JAVAC_VER} -Dpackaging=jar -Dclassifier=sources
