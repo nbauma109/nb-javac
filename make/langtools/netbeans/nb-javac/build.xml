@@ -88,16 +88,26 @@
         <javac srcdir="${build.dir}/depr-src/java/lang" destdir="${build.depr.classes}" />
     </target>
     
-    <target name="-all-in-one-jar">
-        <jar destfile="${dist.dir}/nb-javac-${nb-javac-ver}.jar">
+    <target name="-separate-jars">
+        <jar destfile="${dist.dir}/nb-javac-api-${nb-javac-ver}.jar">
             <fileset dir="${build.classes.dir}">
                 <include name="com/sun/source/**/*"/>
                 <include name="javax/lang/**/*"/>
                 <include name="javax/tools/*"/>
-                <include name="jdk/internal/PreviewFeature*"/>
                 <include name="javax/annotation/**/*"/>
+            </fileset>
+            <fileset dir="${nb.javac.dir}">
+                <include name="README.md"/>
+                <include name="LICENSE.txt"/>
+                <include name="SECURITY.md"/>
+            </fileset>
+        </jar>
+        <jar destfile="${dist.dir}/nb-javac-impl-${nb-javac-ver}.jar">
+            <fileset dir="${build.classes.dir}">
                 <include name="com/sun/tools/**/*"/>
 				<include name="jdk/internal/shellsupport/**/*"/>
+                <include name="jdk/internal/PreviewFeature*"/>
+                <include name="java/lang/**/*"/>
             </fileset>
             <fileset dir="${nb.javac.dir}">
                 <include name="README.md"/>
@@ -108,16 +118,31 @@
         <delete file="${dist.jar}"/>
     </target>
     
-    <target name="-all-in-one-sources-jar">
-        <jar destfile="${dist.dir}/nb-javac-${nb-javac-ver}-sources.jar">
-            <fileset dir="${nb.javac.dir}/src/jdk.jdeps/share/classes">
-                <include name="**/*.java"/>
-            </fileset>
+    <target name="-separate-sources-jars">
+        <jar destfile="${dist.dir}/nb-javac-api-${nb-javac-ver}-sources.jar">
             <fileset dir="${nb.javac.dir}/src/java.compiler/share/classes">
-                <include name="**/*.java"/>
+                <include name="javax/lang/**/*"/>
+                <include name="javax/tools/*"/>
+                <include name="javax/annotation/**/*"/>
             </fileset>
             <fileset dir="${nb.javac.dir}/src/jdk.compiler/share/classes">
-                <include name="**/*.java"/>
+                <include name="com/sun/source/**/*"/>
+            </fileset>
+            <fileset dir="${nb.javac.dir}">
+                <include name="README.md"/>
+                <include name="LICENSE.txt"/>
+                <include name="SECURITY.md"/>
+            </fileset>
+        </jar>
+        <jar destfile="${dist.dir}/nb-javac-impl-${nb-javac-ver}-sources.jar">
+            <fileset dir="${nb.javac.dir}/src/jdk.jdeps/share/classes">
+                <include name="com/sun/tools/**/*"/>
+                <include name="jdk/internal/PreviewFeature*"/>
+                <include name="java/lang/**/*"/>
+            </fileset>
+            <fileset dir="${nb.javac.dir}/src/jdk.compiler/share/classes">
+                <include name="com/sun/tools/**/*"/>
+				<include name="jdk/internal/shellsupport/**/*"/>
             </fileset>
             <fileset dir="${nb.javac.dir}">
                 <include name="README.md"/>
@@ -133,7 +158,7 @@
         <copy file="${dist.dir}/nb-javac-${nb-javac-ver}-impl.jar" tofile="../../../../../nbbuild/netbeans/java/modules/ext/nb-javac-impl.jar" />
         <touch file="../../../../../nbbuild/netbeans/java/.lastModified" />
     </target>
-    <target name="-post-jar" depends="-post-init,-all-in-one-jar,-all-in-one-sources-jar,-copy-jars-to-build">
+    <target name="-post-jar" depends="-post-init,-separate-jars,-separate-sources-jars,-copy-jars-to-build">
     </target>
 
     <target name="-pre-compile-test" depends="jar"/>
