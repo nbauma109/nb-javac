@@ -1183,7 +1183,7 @@ public class JavapTask implements DisassemblerTool.DisassemblerTask, Messages {
 
     private byte[] classData;
     
-    Context context;
+    protected Context context;
     JavaFileManager fileManager;
     JavaFileManager defaultFileManager;
     PrintWriter log;
