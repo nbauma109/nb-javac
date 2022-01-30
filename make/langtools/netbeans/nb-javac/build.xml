@@ -108,12 +108,32 @@
         <delete file="${dist.jar}"/>
     </target>
     
+    <target name="-all-in-one-sources-jar">
+        <jar destfile="${dist.dir}/nb-javac-${nb-javac-ver}-sources.jar">
+            <fileset dir="${nb.javac.dir}/src/jdk.jdeps/share/classes">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="${nb.javac.dir}/src/java.compiler/share/classes">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="${nb.javac.dir}/src/jdk.compiler/share/classes">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="${nb.javac.dir}">
+                <include name="README.md"/>
+                <include name="LICENSE.txt"/>
+                <include name="SECURITY.md"/>
+            </fileset>
+        </jar>
+        <delete file="${dist.jar}"/>
+    </target>
+    
     <target name="-copy-jars-to-build" if="modules.ext.exists">
         <copy file="${dist.dir}/nb-javac-${nb-javac-ver}-api.jar" tofile="../../../../../nbbuild/netbeans/java/modules/ext/nb-javac-api.jar" />
         <copy file="${dist.dir}/nb-javac-${nb-javac-ver}-impl.jar" tofile="../../../../../nbbuild/netbeans/java/modules/ext/nb-javac-impl.jar" />
         <touch file="../../../../../nbbuild/netbeans/java/.lastModified" />
     </target>
-    <target name="-post-jar" depends="-post-init,-all-in-one-jar,-copy-jars-to-build">
+    <target name="-post-jar" depends="-post-init,-all-in-one-jar,-all-in-one-sources-jar,-copy-jars-to-build">
     </target>
 
     <target name="-pre-compile-test" depends="jar"/>
