@@ -25,12 +25,10 @@
 
 package com.sun.tools.javap;
 
-import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.FilterInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -48,7 +46,6 @@ import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -352,14 +349,6 @@ public class JavapTask implements DisassemblerTool.DisassemblerTask, Messages {
         context.put(Messages.class, this);
         options = Options.instance(context);
         attributeFactory = new Attribute.Factory();
-    }
-    
-    public JavapTask(Writer out, Options options, String className, byte[] classData) {
-        this(out, null, null);
-        this.classes = Collections.singletonList(className);
-        this.classData = classData;
-        this.options = options;
-        this.context.put(Options.class, options);
     }
 
     public JavapTask(Writer out,
@@ -924,74 +913,6 @@ public class JavapTask implements DisassemblerTool.DisassemblerTask, Messages {
     }
 
     private JavaFileObject getClassFileObject(String className) throws IOException {
-        if (classData != null) {
-            return new JavaFileObject() {
-                @Override
-                public Kind getKind() {
-                    return Kind.CLASS;
-                }
-
-                @Override
-                public boolean isNameCompatible(String simpleName, Kind kind) {
-                    throw new IllegalArgumentException("Not implemented");
-                }
-
-                @Override
-                public NestingKind getNestingKind() {
-                    throw new IllegalArgumentException("Not implemented");
-                }
-
-                @Override
-                public Modifier getAccessLevel() {
-                    throw new IllegalArgumentException("Not implemented");
-                }
-
-                @Override
-                public URI toUri() {
-                    return null;
-                }
-
-                @Override
-                public String getName() {
-                    return className;
-                }
-
-                @Override
-                public InputStream openInputStream() throws IOException {
-                    return new ByteArrayInputStream(classData);
-                }
-
-                @Override
-                public OutputStream openOutputStream() throws IOException {
-                    throw new IllegalArgumentException("Not implemented");
-                }
-
-                @Override
-                public Reader openReader(boolean ignoreEncodingErrors) throws IOException {
-                    return new InputStreamReader(openInputStream());
-                }
-
-                @Override
-                public CharSequence getCharContent(boolean ignoreEncodingErrors) throws IOException {
-                    throw new IllegalArgumentException("Not implemented");
-                }
-
-                @Override
-                public Writer openWriter() throws IOException {
-                    throw new IllegalArgumentException("Not implemented");
-                }
-
-                @Override
-                public long getLastModified() {
-                    return System.currentTimeMillis();
-                }
-
-                @Override
-                public boolean delete() {
-                    return true;
-                }
-            };
-        }
         try {
             JavaFileObject fo;
             if (moduleLocation != null) {
@@ -1181,8 +1102,6 @@ public class JavapTask implements DisassemblerTool.DisassemblerTask, Messages {
         }
     }
 
-    private byte[] classData;
-    
     protected Context context;
     JavaFileManager fileManager;
     JavaFileManager defaultFileManager;
